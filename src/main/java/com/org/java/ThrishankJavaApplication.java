@@ -8,7 +8,7 @@ public class ThrishankJavaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ThrishankJavaApplication.class, args);
-		System.out.println("hello every opne,,,...");
+		
 	}
 
 }

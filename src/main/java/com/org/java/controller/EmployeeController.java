@@ -103,11 +103,13 @@ public class EmployeeController {
 		Employee emplist = employeeService.findByMaxSalaryDeatails();
 		return new ResponseEntity(emplist, HttpStatus.OK);
 	}
+
 	@GetMapping("/SecondHigestSalary")
 	public ResponseEntity<Employee> SecondHigestSalary() {
 		Employee secondHigestSalary = employeeService.secondHigestSalaryDeatails();
 		return new ResponseEntity(secondHigestSalary, HttpStatus.OK);
 	}
+
 	@GetMapping("/SecondListSalary")
 	public ResponseEntity<Employee> SecondListSalary() {
 		Employee secondListSalary = employeeService.secondListSalaryDeatails();
@@ -155,16 +157,19 @@ public class EmployeeController {
 		Set<Employee> emplist = employeeService.printDublicateRecordsDeatails();
 		return new ResponseEntity(emplist, HttpStatus.OK);
 	}
+
 	@GetMapping("/printDublicatesInString")
 	public ResponseEntity<Employee> printDublicatesInString() {
 		List<String> dublicates = employeeService.printDublicatesInStringDeatails();
 		return new ResponseEntity(dublicates, HttpStatus.OK);
 	}
+
 	@GetMapping("/printwithoutDublicateRecordsInList")
 	public ResponseEntity<Employee> printWithoutDublicateRecords() {
 		Set<Double> emplist = employeeService.printWithoutDublicateRecordsDeatails();
 		return new ResponseEntity(emplist, HttpStatus.OK);
 	}
+
 	@GetMapping("/uniquerecordsInString")
 	public ResponseEntity<Employee> uniquerecordsInString() {
 		List<String> dublicates = employeeService.uniquerecordsInStringDeatails();
@@ -196,79 +201,90 @@ public class EmployeeController {
 	}
 
 	@GetMapping("/indexRanges/{fromIndex}/{toIndex}")
-	public ResponseEntity<Employee> indexRanges(@PathVariable("fromIndex") int fromIndex,@PathVariable("toIndex") int toIndex) {
-		List<Employee> emplist = employeeService.indexRangesDeatails(fromIndex,toIndex);
+	public ResponseEntity<Employee> indexRanges(@PathVariable("fromIndex") int fromIndex,
+			@PathVariable("toIndex") int toIndex) {
+		List<Employee> emplist = employeeService.indexRangesDeatails(fromIndex, toIndex);
 		return new ResponseEntity(emplist, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/firstnonRepeactedCharacterInString")
 	public ResponseEntity<Employee> firstnonRepeactedCharacterInString() {
 		String emplist = employeeService.firstnonRepeactedCharacterInStringDeatails();
 		return new ResponseEntity(emplist, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/firstRepeactedCharacterInString")
 	public ResponseEntity<Employee> firstRepeactedCharacterInString() {
 		String emplist = employeeService.firstRepeactedCharacterInStringDeatails();
 		return new ResponseEntity(emplist, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/longestString")
 	public ResponseEntity<Employee> longestString() {
 		String emplist = employeeService.longestStringDeatails();
 		return new ResponseEntity(emplist, HttpStatus.OK);
 	}
+
 	@GetMapping("/smallestString")
 	public ResponseEntity<Employee> smallestString() {
 		String emplist = employeeService.smallestStringDeatails();
 		return new ResponseEntity(emplist, HttpStatus.OK);
 	}
+
 	@GetMapping("/filterDepartmentIds")
 	public ResponseEntity<Employee> filterDepartmentIds() {
 		List<String> deptIds = employeeService.filterDepartmentIdsDeatails();
 		return new ResponseEntity(deptIds, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/stringReverseJava8")
 	public ResponseEntity<Employee> stringReverseJava8() {
 		String reverse = employeeService.stringReverseJava8Deatails();
 		return new ResponseEntity(reverse, HttpStatus.OK);
 	}
+
 	@GetMapping("/joiningNames")
 	public ResponseEntity<Employee> joiningNames() {
 		String names = employeeService.joiningNamesDeatails();
 		return new ResponseEntity(names, HttpStatus.OK);
 	}
+
 	@GetMapping("/listToSetConversion")
-	public ResponseEntity<Employee> listToSetConversion(){
-		Set<Employee> listToSetConversion=employeeService.listToSetCoversion();
-		return new ResponseEntity(listToSetConversion,HttpStatus.OK);
+	public ResponseEntity<Employee> listToSetConversion() {
+		Set<Employee> listToSetConversion = employeeService.listToSetCoversion();
+		return new ResponseEntity(listToSetConversion, HttpStatus.OK);
 	}
+
 	@GetMapping("/listToMapConversion")
-	public ResponseEntity<Employee> listToMapConversion(){
-		Map<Integer,Employee> listToMapConversion=employeeService.listToMapCoversion();
-		return new ResponseEntity(listToMapConversion,HttpStatus.OK);
+	public ResponseEntity<Employee> listToMapConversion() {
+		Map<Integer, Employee> listToMapConversion = employeeService.listToMapCoversion();
+		return new ResponseEntity(listToMapConversion, HttpStatus.OK);
 	}
+
 	@GetMapping("/setToListConversion")
-	public ResponseEntity<Employee> setToListConversion(){
-		List<Employee> setToListConversion=employeeService.setToListConversion();
-		return new ResponseEntity(setToListConversion,HttpStatus.OK);
+	public ResponseEntity<Employee> setToListConversion() {
+		List<Employee> setToListConversion = employeeService.setToListConversion();
+		return new ResponseEntity(setToListConversion, HttpStatus.OK);
 	}
+
 	@GetMapping("/setToMapConversion")
-	public ResponseEntity<Employee> setToMapConversion(){
-		Map<Integer,Employee> setToMapConversion=employeeService.setToMapConversionDetails();
-		return new ResponseEntity(setToMapConversion,HttpStatus.OK);
+	public ResponseEntity<Employee> setToMapConversion() {
+		Map<Integer, Employee> setToMapConversion = employeeService.setToMapConversionDetails();
+		return new ResponseEntity(setToMapConversion, HttpStatus.OK);
 	}
+
 	@GetMapping("/mapToListConversion")
-	public ResponseEntity<Employee> mapToListConversion(){
-		List<Entry<Integer, Employee>> mapToListConversion=employeeService.mapToListConversionDetails();
-		return new ResponseEntity(mapToListConversion,HttpStatus.OK);
+	public ResponseEntity<Employee> mapToListConversion() {
+		List<Entry<Integer, Employee>> mapToListConversion = employeeService.mapToListConversionDetails();
+		return new ResponseEntity(mapToListConversion, HttpStatus.OK);
 	}
+
 	@GetMapping("/mapToSetConversion")
-	public ResponseEntity<Employee> mapToSetConversion(){
-		Set<Entry<Integer, Employee>> mapToSetConversion=employeeService.mapToSetConversionDetails();
-		return new ResponseEntity(mapToSetConversion,HttpStatus.OK);
+	public ResponseEntity<Employee> mapToSetConversion() {
+		Set<Entry<Integer, Employee>> mapToSetConversion = employeeService.mapToSetConversionDetails();
+		return new ResponseEntity(mapToSetConversion, HttpStatus.OK);
 	}
+
 	@GetMapping("/findAll")
 	public ResponseEntity<Employee> findAllEmployess() {
 		List<Employee> emplist = employeeService.findAllEmployeeDetails();
