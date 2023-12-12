@@ -21,10 +21,10 @@ pipeline {
         stage('Push image to Hub'){
             steps{
                 script{
-                withCredentials([string(credentialsId: 'javadockerhub', variable: 'javadockerhub')])  {
-                bat 'docker login -u srinu255 -p ${javadockerhub}'
+                withCredentials([string(credentialsId: 'Srinu@9676', variable: 'Srinu@9676')])  {
+                bat 'docker login -u srinu255 -p ${Srinu@9676}'
  }
-                bat 'docker push srinu255/thrishank-javaapplicationlatest'
+                bat 'docker push srinu255/thrishank-javaapplicationlatestnew'
                 }
             }
         }
