@@ -181,6 +181,12 @@ public class EmployeeController {
 		List<String> emplist = employeeService.mapNamesDeatails();
 		return new ResponseEntity(emplist, HttpStatus.OK);
 	}
+	@GetMapping("/welcome")
+	public String welcomeTest() {
+		return "WELCOME TO SPRING BOOT APPLICATION DEVELOPMENT";
+		
+		
+	}
 
 	@GetMapping("/findStringOccurence")
 	public ResponseEntity<Employee> findStringOccurence() {
