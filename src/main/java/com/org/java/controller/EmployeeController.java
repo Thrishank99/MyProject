@@ -27,6 +27,12 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService employeeService;
 
+	@GetMapping("/welcome")
+	public String welcomeTest() {
+		return "WELCOME TO SPRING BOOT APPLICATION DEVELOPMENT MY THRISHANK APP";
+
+	}
+
 	@PostMapping("/save")
 	public ResponseEntity<Employee> saveEmployee(@RequestBody Employee employee) {
 		Employee emp = employeeService.saveEmployeeDetails(employee);
@@ -180,12 +186,6 @@ public class EmployeeController {
 	public ResponseEntity<Employee> mapNames() {
 		List<String> emplist = employeeService.mapNamesDeatails();
 		return new ResponseEntity(emplist, HttpStatus.OK);
-	}
-	@GetMapping("/welcome")
-	public String welcomeTest() {
-		return "WELCOME TO SPRING BOOT APPLICATION DEVELOPMENT";
-		
-		
 	}
 
 	@GetMapping("/findStringOccurence")
