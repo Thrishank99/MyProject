@@ -3,6 +3,7 @@ package com.org.java.service;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -97,5 +98,7 @@ public interface EmployeeService {
 	List<Entry<Integer, Employee>> mapToListConversionDetails();
 
 	Set<Entry<Integer, Employee>> mapToSetConversionDetails();
+
+	Optional<Employee> findByEmployeeIdDeatails(int empId);
 
 }

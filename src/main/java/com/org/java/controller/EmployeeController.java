@@ -2,6 +2,7 @@ package com.org.java.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.Map.Entry;
 
@@ -25,11 +26,11 @@ import com.org.java.service.EmployeeService;
 public class EmployeeController {
 
 	@Autowired
-	private EmployeeService employeeService;
+	private EmployeeService employeeService; 
 
 	@GetMapping("/welcome")
 	public String welcomeTest() {
-		return "WELCOME TO SPRING BOOT APPLICATION DEVELOPMENT MY THRISHANK APPlication Exception Handlling is Added";
+		return "WELCOME TO SPRING BOOT APPLICATION DEVELOPMENT MY THRISHANK APPlication UNIT TESTING AND 20% CODE COVERAGE COMPLETED";
 
 	}
 
@@ -53,6 +54,11 @@ public class EmployeeController {
 		return new ResponseEntity("Sucessfully deleted from DB", HttpStatus.NO_CONTENT);
 
 	}
+	@GetMapping("/findById/{empId}")
+	public ResponseEntity<Employee> findByEmployeeId(@PathVariable("empId") int empId) {
+		Optional<Employee> emplist = employeeService.findByEmployeeIdDeatails(empId);
+		return new ResponseEntity(emplist, HttpStatus.OK);
+	}
 
 	@GetMapping("/findByName/{name}")
 	public ResponseEntity<Employee> findByEmployeName(@PathVariable("name") String name) {
@@ -66,7 +72,7 @@ public class EmployeeController {
 		return new ResponseEntity(emplist, HttpStatus.OK);
 	}
 
-	@GetMapping("/findByNameAndDeptName/{name}/{deptName}")
+	@GetMapping("/findByNameAndDeptName/{name}/{deptName}") 
 	public ResponseEntity<Employee> findByNameAndDeptName(@PathVariable("name") String name,
 			@PathVariable("deptName") String deptName) {
 		Employee emplist = employeeService.findByNameAndDeptNameDeatails(name, deptName);
