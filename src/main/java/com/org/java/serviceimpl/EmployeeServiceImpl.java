@@ -15,9 +15,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import com.org.java.entity.Employee;
+import com.org.java.exception.EmptyInputException;
+import com.org.java.exception.NoDataAvailableException;
 import com.org.java.repository.EmployeeRepository;
 import com.org.java.service.EmployeeService;
 
@@ -30,6 +33,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public Employee saveEmployeeDetails(Employee employee) {
 		// TODO Auto-generated method stub
+		if (employee.getName().isEmpty() || employee.getName().length() == 0) {
+			throw new EmptyInputException("600", "given input is empty");
+		} else if (employee.getDeptName().isEmpty() || employee.getDeptName().length() == 0) {
+			throw new EmptyInputException("600", "given input is empty");
+		}
+
 		return employeeRepository.save(employee);
 	}
 
@@ -37,25 +46,43 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<Employee> findAllEmployeeDetails() {
 		// TODO Auto-generated method stub
 		List<Employee> list = employeeRepository.findAll();
+		if (list.isEmpty()) {
+			throw new NoDataAvailableException("600", "No Data available");
+		}
 		return list;
 	}
 
 	@Override
 	public Employee updateEmployeeDetails(Employee employee) {
-		// TODO Auto-generated method stub
+		List<Employee> list = employeeRepository.findAll();
+		List<Integer> empIds = list.stream().map(s1 -> s1.getEmpId()).collect(Collectors.toList());
+		if (!empIds.contains(employee.getEmpId())) {
+			throw new NoDataAvailableException("600", "No Data available");
+		}
 		return employeeRepository.save(employee);
+
 	}
 
 	@Override
-	public void deleteEmployeeDetails(Employee employee) {
+	public Employee deleteEmployeeDetails(Employee employee) {
 		// TODO Auto-generated method stub
+		List<Employee> list = employeeRepository.findAll();
+		List<Integer> empIds = list.stream().map(s1 -> s1.getEmpId()).collect(Collectors.toList());
+		if (!empIds.contains(employee.getEmpId())) {
+			throw new NoDataAvailableException("600", "No Data available");
+		}
 		employeeRepository.delete(employee);
+		return employee;
+
 	}
 
 	@Override
 	public List<Employee> findByEmployeNameDeatails(String name) {
 		// TODO Auto-generated method stub
 		List<Employee> findByName = employeeRepository.findByName(name);
+		if (findByName.contains(name) || findByName.isEmpty()) {
+			throw new NoDataAvailableException("600", "No Data available");
+		}
 		return findByName;
 	}
 
@@ -63,16 +90,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<Employee> findByEmployedeptNameDeatails(String deptName) {
 		// TODO Auto-generated method stub
 		List<Employee> findByDeptName = employeeRepository.findByDeptName(deptName);
+		if (findByDeptName.contains(deptName) || findByDeptName.isEmpty()) {
+			throw new NoDataAvailableException("600", "No Data available");
+		}
 		return findByDeptName;
 	}
 
 	@Override
 	public List<Employee> findByEmployeeSalaryAscDeatails() {
 		List<Employee> list = employeeRepository.findAll();
+		if (list.isEmpty()) {
+			throw new NoDataAvailableException("600", "No Data available");
+		}
 		List<Employee> ascsort = list.stream()
 				.sorted((s1, s2) -> s1.getSalary() < s2.getSalary() ? -1 : s2.getSalary() < s2.getSalary() ? 1 : 0)
 				.collect(Collectors.toList());
-		
+
 		/*
 		 * List<Employee> ByIDAscSorted =
 		 * list.stream().sorted(Comparator.comparing(Employee::getEmpId)).collect(
@@ -85,6 +118,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public List<Employee> findByEmployeeSalaryDscDeatails() {
 		List<Employee> list = employeeRepository.findAll();
+		if (list.isEmpty()) {
+			throw new NoDataAvailableException("600", "No Data available");
+		}
 		List<Employee> dscsort = list.stream()
 				.sorted((s1, s2) -> s1.getSalary() > s2.getSalary() ? -1 : s2.getSalary() > s1.getSalary() ? 1 : 0)
 				.collect(Collectors.toList());
@@ -101,6 +137,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<Employee> findByEmployeeIdEvenDeatails() {
 		List<Employee> list = employeeRepository.findAll();
 		List<Employee> evenIds = list.stream().filter(s1 -> s1.getEmpId() % 2 == 0).collect(Collectors.toList());
+		if(evenIds.isEmpty()) {
+			throw new NoDataAvailableException("600", "No Data available");
+		}
 		return evenIds;
 	}
 
@@ -108,6 +147,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<Employee> findByEmployeeIdOddDeatails() {
 		List<Employee> list = employeeRepository.findAll();
 		List<Employee> oddIds = list.stream().filter(s1 -> s1.getEmpId() % 2 != 0).collect(Collectors.toList());
+		if(oddIds.isEmpty()) {
+			throw new NoDataAvailableException("600", "No Data available");
+		}
 		return oddIds;
 	}
 
@@ -150,7 +192,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<Employee> findParticularRecordsDeatails() {
 		List<Employee> list = employeeRepository.findAll();
 		List<Employee> records = list.stream().skip(2).limit(5).collect(Collectors.toList());
-
+		if (records.isEmpty()) {
+			throw new NoDataAvailableException("600", "No Data available");
+		}
 		return records;
 	}
 
@@ -159,6 +203,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Set<Double> set = new HashSet<Double>();
 		List<Employee> list = employeeRepository.findAll();
 		Set<Employee> dublicates = list.stream().filter(s1 -> !set.add(s1.getSalary())).collect(Collectors.toSet());
+		if (dublicates.isEmpty()) {
+			throw new NoDataAvailableException("600", "No Data available");
+		}
 		return dublicates;
 	}
 
@@ -167,12 +214,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Set<Double> set = new HashSet<Double>();
 		List<Employee> list = employeeRepository.findAll();
 		Set<Employee> dublicates = list.stream().filter(s1 -> !set.add(s1.getSalary())).collect(Collectors.toSet());
+		if (dublicates.isEmpty()) {
+			throw new NoDataAvailableException("600", "No Data available");
+		}
 		return set;
 	}
 
 	@Override
 	public List<Employee> findParticularRecordsAscsDeatails() {
 		List<Employee> list = employeeRepository.findAll();
+		if(list.isEmpty()) {
+			throw new NoDataAvailableException("600","No data Availble");
+		}
 		List<Employee> ascrecords = list.stream()
 				.sorted((s1, s2) -> s1.getSalary() < s2.getSalary() ? -1 : s2.getSalary() < s1.getSalary() ? 1 : 0)
 				.skip(1).limit(4).collect(Collectors.toList());
@@ -193,10 +246,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<Employee> list = employeeRepository.findAll();
 		List<String> names = list.stream().map(s1 -> s1.getName()).sorted().collect(Collectors.toList());
 		return names;
-		//List<Employee> ascNamesSorted = list.stream().sorted(Comparator.comparing(Employee::getEmpName)).collect(Collectors.toList());
-		//return ascNamesSorted;
-		//List<Employee> dscNamesSorted = list.stream().sorted(Comparator.comparing(Employee::getEmpName).reversed()).collect(Collectors.toList());
-		//return dscNamesSorted;
+		// List<Employee> ascNamesSorted =
+		// list.stream().sorted(Comparator.comparing(Employee::getEmpName)).collect(Collectors.toList());
+		// return ascNamesSorted;
+		// List<Employee> dscNamesSorted =
+		// list.stream().sorted(Comparator.comparing(Employee::getEmpName).reversed()).collect(Collectors.toList());
+		// return dscNamesSorted;
 	}
 
 	@Override
@@ -246,12 +301,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public Employee findByNameAndDeptNameDeatails(String name, String deptName) {
 		Employee list = employeeRepository.findByNameAndDeptName(name, deptName);
+		if(list.getName().isEmpty()) {
+			throw new NoDataAvailableException("600","No data Availble");
+		}
 		return list;
 	}
 
 	@Override
 	public Employee findByEmpIdAndNameAndDeptNameDeatails(int empId, String name, String deptName) {
 		Employee list = employeeRepository.findByEmpIdAndNameAndDeptName(empId, name, deptName);
+		if(list.getName().isEmpty()) {
+			throw new NoDataAvailableException("600","No data Availble");
+		}
 		return list;
 	}
 
@@ -372,14 +433,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public Employee secondHigestSalaryDeatails() {
 		List<Employee> list = employeeRepository.findAll();
-	Employee secondHigestSalary=	list.stream().sorted(Comparator.comparingDouble(Employee:: getSalary).reversed()).skip(1).findFirst().get();
+		Employee secondHigestSalary = list.stream().sorted(Comparator.comparingDouble(Employee::getSalary).reversed())
+				.skip(1).findFirst().get();
 		return secondHigestSalary;
 	}
 
 	@Override
 	public Employee secondListSalaryDeatails() {
 		List<Employee> list = employeeRepository.findAll();
-		Employee secondListSalary=	list.stream().sorted(Comparator.comparingDouble(Employee:: getSalary)).skip(1).findFirst().get();
+		Employee secondListSalary = list.stream().sorted(Comparator.comparingDouble(Employee::getSalary)).skip(1)
+				.findFirst().get();
 		return secondListSalary;
 	}
 
@@ -387,7 +450,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<Employee> indexRangesDeatails(int fromIndex, int toIndex) {
 		// TODO Auto-generated method stub
 		List<Employee> list = employeeRepository.findAll();
-		List<Employee> ranges=list.subList(fromIndex, toIndex);
+		List<Employee> ranges = list.subList(fromIndex, toIndex);
 		return ranges;
 	}
 
@@ -395,7 +458,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public String joiningNamesDeatails() {
 		// TODO Auto-generated method stub
 		List<Employee> list = employeeRepository.findAll();
-		String joinNames=	list.stream().map(s1->s1.getName()).collect(Collectors.joining(","));
+		String joinNames = list.stream().map(s1 -> s1.getName()).collect(Collectors.joining(","));
 		return joinNames;
 	}
 
@@ -403,7 +466,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Set<Employee> listToSetCoversion() {
 		// TODO Auto-generated method stub
 		List<Employee> list = employeeRepository.findAll();
-		Set<Employee> set=list.stream().collect(Collectors.toSet());
+		Set<Employee> set = list.stream().collect(Collectors.toSet());
 		return set;
 	}
 
@@ -411,32 +474,35 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Map<Integer, Employee> listToMapCoversion() {
 		// TODO Auto-generated method stub
 		List<Employee> list = employeeRepository.findAll();
-		Map<Integer,Employee> listToMapConversion=list.stream().collect(Collectors.toMap(Employee::getEmpId,Function.identity()));
+		Map<Integer, Employee> listToMapConversion = list.stream()
+				.collect(Collectors.toMap(Employee::getEmpId, Function.identity()));
 		return listToMapConversion;
 	}
 
 	@Override
 	public List<Employee> setToListConversion() {
 		List<Employee> list = employeeRepository.findAll();
-		Set<Employee> set=list.stream().collect(Collectors.toSet());
-		List<Employee> setToList=set.stream().collect(Collectors.toList());
+		Set<Employee> set = list.stream().collect(Collectors.toSet());
+		List<Employee> setToList = set.stream().collect(Collectors.toList());
 		return setToList;
 	}
 
 	@Override
 	public Map<Integer, Employee> setToMapConversionDetails() {
 		List<Employee> list = employeeRepository.findAll();
-		Set<Employee> set=list.stream().collect(Collectors.toSet());
+		Set<Employee> set = list.stream().collect(Collectors.toSet());
 		// TODO Auto-generated method stub
-		Map<Integer, Employee> setToMap=set.stream().collect(Collectors.toMap(Employee::getEmpId, Function.identity()));
+		Map<Integer, Employee> setToMap = set.stream()
+				.collect(Collectors.toMap(Employee::getEmpId, Function.identity()));
 		return setToMap;
 	}
 
 	@Override
 	public List<Entry<Integer, Employee>> mapToListConversionDetails() {
 		List<Employee> list = employeeRepository.findAll();
-		Map<Integer,Employee> listToMapConversion=list.stream().collect(Collectors.toMap(Employee::getEmpId,Function.identity()));
-		List<Entry<Integer, Employee>> mapToList=listToMapConversion.entrySet().stream().collect(Collectors.toList());
+		Map<Integer, Employee> listToMapConversion = list.stream()
+				.collect(Collectors.toMap(Employee::getEmpId, Function.identity()));
+		List<Entry<Integer, Employee>> mapToList = listToMapConversion.entrySet().stream().collect(Collectors.toList());
 		return mapToList;
 	}
 
@@ -444,8 +510,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Set<Entry<Integer, Employee>> mapToSetConversionDetails() {
 		// TODO Auto-generated method stub
 		List<Employee> list = employeeRepository.findAll();
-		Map<Integer,Employee> listToMapConversion=list.stream().collect(Collectors.toMap(Employee::getEmpId,Function.identity()));
-		Set<Entry<Integer, Employee>> mapToSet=listToMapConversion.entrySet().stream().collect(Collectors.toSet());
+		Map<Integer, Employee> listToMapConversion = list.stream()
+				.collect(Collectors.toMap(Employee::getEmpId, Function.identity()));
+		Set<Entry<Integer, Employee>> mapToSet = listToMapConversion.entrySet().stream().collect(Collectors.toSet());
 		return mapToSet;
 	}
 

@@ -29,27 +29,27 @@ public class EmployeeController {
 
 	@GetMapping("/welcome")
 	public String welcomeTest() {
-		return "WELCOME TO SPRING BOOT APPLICATION DEVELOPMENT MY THRISHANK APP";
+		return "WELCOME TO SPRING BOOT APPLICATION DEVELOPMENT MY THRISHANK APPlication Exception Handlling is Added";
 
 	}
 
 	@PostMapping("/save")
 	public ResponseEntity<Employee> saveEmployee(@RequestBody Employee employee) {
 		Employee emp = employeeService.saveEmployeeDetails(employee);
-		return new ResponseEntity<Employee>(emp, HttpStatus.CREATED);
+		return new ResponseEntity("Sucessfully saved in to a Db", HttpStatus.CREATED);
 
 	}
 
 	@PutMapping("/update")
 	public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee) {
 		Employee emp = employeeService.updateEmployeeDetails(employee);
-		return new ResponseEntity<Employee>(emp, HttpStatus.CREATED);
+		return new ResponseEntity("Sucessfully updated fields in  DB", HttpStatus.CREATED);
 
 	}
 
 	@DeleteMapping("/delete")
 	public ResponseEntity<Employee> deletEmployee(@RequestBody Employee employee) {
-		employeeService.deleteEmployeeDetails(employee);
+		Employee emp=employeeService.deleteEmployeeDetails(employee);
 		return new ResponseEntity("Sucessfully deleted from DB", HttpStatus.NO_CONTENT);
 
 	}

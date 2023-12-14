@@ -18,7 +18,7 @@ public interface EmployeeService {
 
 	Employee updateEmployeeDetails(Employee employee);
 
-	void deleteEmployeeDetails(Employee employee);
+	Employee deleteEmployeeDetails(Employee employee);
 
 	List<Employee> findByEmployeNameDeatails(String name);
 
