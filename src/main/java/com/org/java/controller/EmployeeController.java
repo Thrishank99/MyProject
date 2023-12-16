@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,18 +26,22 @@ import com.org.java.service.EmployeeService;
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
+	Logger logger=LoggerFactory.getLogger(EmployeeController.class);
 
 	@Autowired
 	private EmployeeService employeeService; 
 
 	@GetMapping("/welcome")
 	public String welcomeTest() {
-		return "WELCOME TO SPRING BOOT APPLICATION DEVELOPMENT MY THRISHANK APPlication UNIT TESTING AND 20% CODE COVERAGE COMPLETED DESIGN PATTERAN AND PROPERTIES ADDED";
+		logger.trace("it is trace method welcome calling");
+		logger.info("wel come method is working");
+		return "WELCOME TO SPRING BOOT APPLICATION DEVELOPMENT MY THRISHANK APPlication UNIT TESTING AND 20% CODE COVERAGE COMPLETED DESIGN PATTERAN AND PROPERTIES ADDED And Relation mapping added one";
  
 	}
 
 	@PostMapping("/save")
 	public ResponseEntity<Employee> saveEmployee(@RequestBody Employee employee) {
+		logger.info("start for save the data");
 		Employee emp = employeeService.saveEmployeeDetails(employee);
 		return new ResponseEntity("Sucessfully saved in to a Db", HttpStatus.CREATED);
 
@@ -299,8 +305,11 @@ public class EmployeeController {
 
 	@GetMapping("/findAll")
 	public ResponseEntity<Employee> findAllEmployess() {
+		logger.info("satart for getting the data getting the data");
 		List<Employee> emplist = employeeService.findAllEmployeeDetails();
+		logger.info("sucessfully getting the data");
 		return new ResponseEntity(emplist, HttpStatus.OK);
+		
 	}
 
 }

@@ -18,7 +18,7 @@ public class ThrishankJavaApplication extends SpringBootServletInitializer{
 	}
 
 
-	public static void main(String[] args) { 
+	public static void main(String[] args) {  
 		SpringApplication.run(ThrishankJavaApplication.class, args);
 		FactoryNotification fn=new FactoryNotification();
 		Notification note=fn.getNotification("mails");

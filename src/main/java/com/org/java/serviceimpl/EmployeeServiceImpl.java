@@ -15,10 +15,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import com.org.java.controller.EmployeeController;
 import com.org.java.entity.Employee;
 import com.org.java.exception.EmptyInputException;
 import com.org.java.exception.NoDataAvailableException;
@@ -30,6 +33,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
 	private EmployeeRepository employeeRepository;
+	
+	Logger logger=LoggerFactory.getLogger(EmployeeController.class);
 
 	@Override
 	public Employee saveEmployeeDetails(Employee employee) {
@@ -39,9 +44,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		} else if (employee.getDeptName().isEmpty() || employee.getDeptName().length() == 0) {
 			throw new EmptyInputException("600", "given input is empty");
 		}
-
+		logger.info("Sucess fully save the data");
 		return employeeRepository.save(employee);
-	}
+	} 
 
 	@Override
 	public List<Employee> findAllEmployeeDetails() {
