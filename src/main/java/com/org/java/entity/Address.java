@@ -1,12 +1,5 @@
 package com.org.java.entity;
-
-
-
-import java.util.List;
 import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
