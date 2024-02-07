@@ -1,4 +1,4 @@
-pipeline {
++pipeline {
     agent any
     tools{
         maven 'maven 3.9.1'
@@ -13,21 +13,12 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    bat 'docker build -t srinu255/thrishank-javaapplicationlatest .'
+                    bat 'docker build -t srinu255/thrishank-javaapplication .'
                 }
             }
         
         }
-        stage('Push image to Hub'){
-            steps{
-                script{
-                withCredentials([string(credentialsId: 'Srinu@9676', variable: 'Srinu@9676')])  {
-                bat 'docker login -u srinu255 -p ${Srinu@9676}'
- }
-                bat 'docker push srinu255/thrishank-javaapplicationlatestnew'
-                }
-            }
-        }
+          
         
     }
 }
