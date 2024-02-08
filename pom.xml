@@ -72,7 +72,8 @@
 	</dependencies>
 
 	<build>
-		<finalName>Thrishank-JavaApplication</finalName>
+		<!--<finalName>Thrishank-JavaApplication</finalName>-->
+		<finalName>Thrishank-dockertest</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
