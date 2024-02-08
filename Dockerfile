@@ -1,4 +1,4 @@
 FROM openjdk:17
 EXPOSE 8080
-ADD target/Thrishank-JavaApplication.jar Thrishank-JavaApplication.jar
-ENTRYPOINT ["java","-jar","/Thrishank-JavaApplication"]
+ADD target/Thrishank-dockertest.jar Thrishank-dockertest.jar
+ENTRYPOINT ["java","-jar","/Thrishank-dockertest"]
