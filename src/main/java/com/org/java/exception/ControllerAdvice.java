@@ -18,5 +18,11 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<String>("No Data Availble Given Input please check once",HttpStatus.BAD_REQUEST);
 		
 	}
+	
+	@ExceptionHandler(NullPointerException.class)
+	public ResponseEntity<String> NullPointerException(NullPointerException nullPointerException){
+		return new ResponseEntity<String>("Given input no date availbale please check and change",HttpStatus.BAD_REQUEST);
+		
+	}
 
 }

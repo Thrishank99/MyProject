@@ -1,5 +1,4 @@
-package com.org.java.entity;
-
+package com.org.java.relations;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -10,17 +9,13 @@ import lombok.ToString;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor 
 @ToString
-public class Employee {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Pancard {
 	
 	@Id
-	@GeneratedValue
-	private int empId;
-	private String name;
-	private double salary;
-	private int departmentId;
-	private String deptName;
+	private int panId;
+	private String panNumber;
 
 }

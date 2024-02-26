@@ -1,22 +1,13 @@
-package com.org.java.entity;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+package com.org.java.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor 
-@ToString
-public class Employee {
+public class EmployeeDto {
 	
-	@Id
-	@GeneratedValue
 	private int empId;
 	private String name;
 	private double salary;

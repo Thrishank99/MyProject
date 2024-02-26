@@ -12,29 +12,62 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.event.annotation.AfterTestClass;
+import org.springframework.test.context.event.annotation.BeforeTestClass;
 
+import com.org.java.controller.Calculator;
 import com.org.java.entity.Employee;
 import com.org.java.repository.EmployeeRepository;
 import com.org.java.service.EmployeeService;
 
 @SpringBootTest
 class ThrishankJavaApplicationTests {
+	
+	@Autowired
+	private Calculator calculator;
 
 	@Autowired
 	private EmployeeService employeeService;
 
 	@MockBean
 	private EmployeeRepository employeeRepository;
+	
+	@BeforeTestClass
+	public void beforeClassTest() {
+		System.out.println("it is print before class will executeded....");	
+	}
+	@Before(value = "caluculateSubTest")
+	public void beforeTest() {
+		System.out.println("will executed before Test");	
+	}
+	
+	@Test
+	public void caluculateAddTest() {
+		assertEquals(25, calculator.addition(15, 10));	
+	}
+	
+	
+	@Test
+	public void caluculateSubTest() {
+		assertEquals(5, calculator.substraction(15, 10));
+		
+	}
 
 	@Test
 	public void saveTest() {
-		Employee emp = new Employee(105, "naveen", 5, 8, "775");
+		Employee emp = new Employee(211, "nave", 52, 85, "75");
 		when(employeeRepository.save(emp)).thenReturn(emp);
 		assertEquals(emp, employeeService.saveEmployeeDetails(emp));
+	}
+	@AfterTestClass
+	public void afterTest() {
+		System.out.println("will execute after test");
+		
 	}
 
 	@Test

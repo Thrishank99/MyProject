@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
+import com.org.java.dto.EmployeeDto;
 import com.org.java.entity.Employee;
 
 @Service
@@ -100,5 +101,15 @@ public interface EmployeeService {
 	Set<Entry<Integer, Employee>> mapToSetConversionDetails();
 
 	Optional<Employee> findByEmployeeIdDeatails(int empId);
+
+	List<Employee> findByDepartmentDetails(String deptName);
+
+	String leftRotationStringDeatails();
+
+	String rightRotationStringDeatails();
+
+	List<EmployeeDto> findByEmployeeBetweenSalaryDeatails();
+
+	Map<String, Long> findBygroupCountDeatails();
 
 }

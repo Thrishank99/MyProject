@@ -15,16 +15,19 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.swing.tree.RowMapper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import com.org.java.controller.EmployeeController;
+import com.org.java.dto.EmployeeDto;
 import com.org.java.entity.Employee;
 import com.org.java.exception.EmptyInputException;
 import com.org.java.exception.NoDataAvailableException;
+import com.org.java.mapper.EmployeeMapper;
 import com.org.java.repository.EmployeeRepository;
 import com.org.java.service.EmployeeService;
 
@@ -112,7 +115,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 				.sorted((s1, s2) -> s1.getSalary() < s2.getSalary() ? -1 : s2.getSalary() < s2.getSalary() ? 1 : 0)
 				.collect(Collectors.toList());
 
-		/*
+		/*findByEmpIdAndNameAndDeptName
 		 * List<Employee> ByIDAscSorted =
 		 * list.stream().sorted(Comparator.comparing(Employee::getEmpId)).collect(
 		 * Collectors.toList()); return ByIDAscSorted;
@@ -162,8 +165,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public Employee findByMaxSalaryDeatails() {
 		List<Employee> list = employeeRepository.findAll();
-		// Employee
-		// maxSalary=list.stream().max((s1,s2)->s1.getSalary()<s2.getSalary()?-1:s1.getSalary()<s2.getSalary()?1:0).get();
+		 Employee
+		 maxSalary11=list.stream().max((s1,s2)->s1.getSalary()<s2.getSalary()?-1:s1.getSalary()<s2.getSalary()?1:0).get();
 		Employee maxSalaryEmployee = list.stream().max(Comparator.comparingDouble(s1 -> s1.getSalary())).get();
 		return maxSalaryEmployee;
 		// return maxSalary;
@@ -250,7 +253,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public List<String> mapNamesDeatails() {
 		List<Employee> list = employeeRepository.findAll();
-		List<String> names = list.stream().map(s1 -> s1.getName()).sorted().collect(Collectors.toList());
+		List<String> names = list.stream().map(s1 -> s1.getName()).sorted(Comparator.reverseOrder()).collect(Collectors.toList());
 		return names;
 		// List<Employee> ascNamesSorted =
 		// list.stream().sorted(Comparator.comparing(Employee::getEmpName)).collect(Collectors.toList());
@@ -274,18 +277,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 			}
 
 		}
+		Map<String, Long> map=	Arrays.stream(str.split("")).collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+		System.out.println(map);
+		
 		char[] ch = str.toCharArray();
-		Map<Character, Integer> map = new HashMap<Character, Integer>();
+		Map<Character, Integer> map1 = new HashMap<Character, Integer>();
 		for (Character char1 : ch) {
-			if (map.containsKey(char1)) {
-				map.put(char1, map.get(char1) + 1);
+			if (map1.containsKey(char1)) {
+				map1.put(char1, map1.get(char1) + 1);
 			} else {
-				map.put(char1, +1);
+				map1.put(char1, +1);
 			}
 
 		}
 		System.out.println(map);
-		return map;
+		return map1;
 	}
 
 	@Override
@@ -328,8 +334,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<Employee> list = employeeRepository.findAll();
 		List<String> names = list.stream().map(s1 -> s1.getName()).sorted().collect(Collectors.toList());
 		for (String string : names) {
-			if (string.equals("naveenkumar")) {
-				str = "naveenkumar";
+			if (string.equals("rajee")) {
+				str = "rajee";
 				break;
 			}
 
@@ -346,8 +352,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<Employee> list = employeeRepository.findAll();
 		List<String> names = list.stream().map(s1 -> s1.getName()).sorted().collect(Collectors.toList());
 		for (String string : names) {
-			if (string.equals("naveenkumar")) {
-				str = "naveenkumar";
+			if (string.equals("rajee")) {
+				str = "rajee";
 				break;
 			}
 
@@ -364,8 +370,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<Employee> list = employeeRepository.findAll();
 		List<String> names = list.stream().map(s1 -> s1.getName()).sorted().collect(Collectors.toList());
 		for (String string : names) {
-			if (string.equals("naveenkumar")) {
-				str = "naveenkumar";
+			if (string.equals("rajee")) {
+				str = "rajee";
 				break;
 			}
 
@@ -527,5 +533,50 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Optional<Employee> emp=employeeRepository.findByEmpId(empId);
 		// TODO Auto-generated method stub
 		return emp;
+	}
+	public List<Employee> findByDepartmentDetails(String deptName){
+	List<Employee> deptNames=employeeRepository.findByDeptName(deptName);
+	return deptNames;
+		
+	}
+
+	@Override
+	public String leftRotationStringDeatails() {
+		
+		String originalString="sreenivasarao";
+		int rotateCharacters=4;
+		String leftRotation=originalString.substring(rotateCharacters)+originalString.substring(0,rotateCharacters);
+		return leftRotation;
+	}
+
+	@Override
+	public String rightRotationStringDeatails() {
+		// TODO Auto-generated method stub
+		String originalString="sreenivasarao";
+		int rotatechar=3;
+		int partion=originalString.length()-rotatechar;
+		String rightRotation=originalString.substring(partion)+originalString.substring(0,partion);
+		return rightRotation;
+	}
+
+	@Override
+	public List<EmployeeDto> findByEmployeeBetweenSalaryDeatails() {
+		List<Employee> list=employeeRepository.findAll();
+	List<Employee> empList=	list.stream().filter(s1->s1.getSalary()>65000 & s1.getSalary()<90000).collect(Collectors.toList());
+	List<EmployeeDto> empDtoList= empList.stream().map(s1->EmployeeMapper.INSTANCE.mapEmployeeToEmployeeDtp(s1)).collect(Collectors.toList());
+		return empDtoList;
+	}
+
+	@Override
+	public Map<String, Long> findBygroupCountDeatails() {
+		// TODO Auto-generated method stub
+		List<Employee> list=employeeRepository.findAll();
+		List<EmployeeDto> dtoList=list.stream().map(s1->EmployeeMapper.INSTANCE.mapEmployeeToEmployeeDtp(s1)).collect(Collectors.toList());
+		
+		Map<String, Long> deptDeatils=dtoList.stream().collect(Collectors.groupingBy(EmployeeDto::getDeptName,Collectors.counting()));
+	
+		
+		return deptDeatils;
+		
 	}
 }

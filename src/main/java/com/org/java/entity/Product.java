@@ -2,25 +2,24 @@ package com.org.java.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+
 
 @Entity
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
-@AllArgsConstructor 
-@ToString
-public class Employee {
+public class Product {
 	
 	@Id
-	@GeneratedValue
-	private int empId;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int productId;
 	private String name;
-	private double salary;
-	private int departmentId;
-	private String deptName;
+	private int price;
+	private int qty;
 
 }

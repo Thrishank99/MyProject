@@ -18,25 +18,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.org.java.dto.EmployeeDto;
 import com.org.java.entity.Employee;
 import com.org.java.service.EmployeeService;
 
 @RestController
 @RequestMapping("/employee")
+@SuppressWarnings("unchecked")
 public class EmployeeController {
-	Logger logger=LoggerFactory.getLogger(EmployeeController.class);
+	Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 
 	@Autowired
-	private EmployeeService employeeService; 
+	private EmployeeService employeeService;
 
 	@GetMapping("/welcome")
 	public String welcomeTest() {
 		logger.trace("it is trace method welcome calling");
 		logger.info("wel come method is working");
 		return "WELCOME TO SPRING BOOT APPLICATION DEVELOPMENT MY THRISHANK APPlication UNIT TESTING AND 20% CODE COVERAGE COMPLETED DESIGN PATTERAN AND PROPERTIES ADDED.JANVERY MONTH NEWLLY ADDED THE DATA PLESE CHECK THROW JENKINS AND DOCKER";
- 
+
 	}
 
 	@PostMapping("/save")
@@ -56,10 +59,11 @@ public class EmployeeController {
 
 	@DeleteMapping("/delete")
 	public ResponseEntity<Employee> deletEmployee(@RequestBody Employee employee) {
-		Employee emp=employeeService.deleteEmployeeDetails(employee);
+		Employee emp = employeeService.deleteEmployeeDetails(employee);
 		return new ResponseEntity("Sucessfully deleted from DB", HttpStatus.NO_CONTENT);
 
 	}
+
 	@GetMapping("/findById/{empId}")
 	public ResponseEntity<Employee> findByEmployeeId(@PathVariable("empId") int empId) {
 		Optional<Employee> emplist = employeeService.findByEmployeeIdDeatails(empId);
@@ -71,6 +75,18 @@ public class EmployeeController {
 		List<Employee> emplist = employeeService.findByEmployeNameDeatails(name);
 		return new ResponseEntity(emplist, HttpStatus.OK);
 	}
+	@GetMapping("/findByName")
+	public ResponseEntity<Employee> findByEmployeNameQp(@RequestParam(value="name",required = false) String name) {
+		List<Employee> emplist = employeeService.findByEmployeNameDeatails(name);
+		return new ResponseEntity(emplist, HttpStatus.OK);
+	}
+
+	@GetMapping("/findByDepatmentName/{deptName}")
+	public ResponseEntity<Employee> findByDeptDetails(@PathVariable("deptName") String deptName) {
+		List<Employee> deptDetails = employeeService.findByDepartmentDetails(deptName);
+		return new ResponseEntity(deptDetails, HttpStatus.OK);
+
+	}
 
 	@GetMapping("/findByDeptName/{deptName}")
 	public ResponseEntity<Employee> findByEmployedeptName(@PathVariable("deptName") String deptName) {
@@ -78,7 +94,7 @@ public class EmployeeController {
 		return new ResponseEntity(emplist, HttpStatus.OK);
 	}
 
-	@GetMapping("/findByNameAndDeptName/{name}/{deptName}") 
+	@GetMapping("/findByNameAndDeptName/{name}/{deptName}")
 	public ResponseEntity<Employee> findByNameAndDeptName(@PathVariable("name") String name,
 			@PathVariable("deptName") String deptName) {
 		Employee emplist = employeeService.findByNameAndDeptNameDeatails(name, deptName);
@@ -103,7 +119,16 @@ public class EmployeeController {
 		List<Employee> emplist = employeeService.findByEmployeeSalaryDscDeatails();
 		return new ResponseEntity(emplist, HttpStatus.OK);
 	}
-
+	@GetMapping("/findByBetwenSalary")
+	public ResponseEntity<Employee> findByEmployeeBetweenSalary() {
+		List<EmployeeDto> emplist = employeeService.findByEmployeeBetweenSalaryDeatails();
+		return new ResponseEntity(emplist, HttpStatus.OK);
+	}
+	@GetMapping("/groupCount")
+	public ResponseEntity<Employee> findBygroupCount() {
+		Map<String, Long> emplist = employeeService.findBygroupCountDeatails();
+		return new ResponseEntity(emplist, HttpStatus.OK);
+	}
 	@GetMapping("/findByEvenNumber")
 	public ResponseEntity<Employee> findByEmployeeIdEven() {
 		List<Employee> emplist = employeeService.findByEmployeeIdEvenDeatails();
@@ -242,6 +267,17 @@ public class EmployeeController {
 		String emplist = employeeService.longestStringDeatails();
 		return new ResponseEntity(emplist, HttpStatus.OK);
 	}
+	@GetMapping("/leftRotationString")
+	public ResponseEntity<Employee> leftRotationString() {
+		String emplist = employeeService.leftRotationStringDeatails();
+		return new ResponseEntity(emplist, HttpStatus.OK);
+	}
+	@GetMapping("/rightRotationString")
+	public ResponseEntity<Employee> rightRotationString() {
+		String emplist = employeeService.rightRotationStringDeatails();
+		return new ResponseEntity(emplist, HttpStatus.OK);
+	}
+
 
 	@GetMapping("/smallestString")
 	public ResponseEntity<Employee> smallestString() {
@@ -304,12 +340,12 @@ public class EmployeeController {
 	}
 
 	@GetMapping("/findAll")
-	public ResponseEntity<Employee> findAllEmployess() {
+	public ResponseEntity<List<Employee>> findAllEmployess() {
 		logger.info("satart for getting the data getting the data");
 		List<Employee> emplist = employeeService.findAllEmployeeDetails();
 		logger.info("sucessfully getting the data");
-		return new ResponseEntity(emplist, HttpStatus.OK);
-		
+		return new ResponseEntity<List<Employee>>(emplist, HttpStatus.OK);
+
 	}
 
 }

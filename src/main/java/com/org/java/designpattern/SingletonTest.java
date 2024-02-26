@@ -1,5 +1,6 @@
 package com.org.java.designpattern;
 
+
 public class SingletonTest {
 	private static SingletonTest t=new SingletonTest();
 	
@@ -10,6 +11,9 @@ public static SingletonTest getTest()
 {
 	return t;
 	
+}
+public void simpleMethod() {
+	System.out.println("it is simple method hascode of::"+ t);
 }
 }
 //Aproch-2
