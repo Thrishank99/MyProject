@@ -22,7 +22,7 @@ pipeline {
             steps{
                 script{
                   withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-                  bat 'docker login -u srinu255 -p ${dockerhubpwd}'
+                  bat 'docker login -u srinu255 -p ${dockerhub-pwd}'
 
 }
                    bat 'docker push srinu255/thrishank-jenikins-pipeline'
