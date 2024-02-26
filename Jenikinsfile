@@ -18,7 +18,15 @@ pipeline {
             }
         
         }
-          
-        
-    }
+        stage('Push image to Hub'){
+            steps{
+                script{
+                  withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
+                  sh 'docker login -u srinu255 -p ${dockerhubpwd}'
+
 }
+                   sh 'docker push srinu255/thrishank-jenikins-pipeline'
+                }
+            }
+        }      
+    }
