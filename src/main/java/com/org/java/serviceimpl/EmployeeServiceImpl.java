@@ -219,14 +219,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public Set<Double> printWithoutDublicateRecordsDeatails() {
+	public Set<Employee> printWithoutDublicateRecordsDeatails() {
 		Set<Double> set = new HashSet<Double>();
 		List<Employee> list = employeeRepository.findAll();
-		Set<Employee> dublicates = list.stream().filter(s1 -> !set.add(s1.getSalary())).collect(Collectors.toSet());
-		if (dublicates.isEmpty()) {
+		Set<Employee> withoutdublicates = list.stream().filter(s1 -> set.add(s1.getSalary())).collect(Collectors.toSet());
+		if (withoutdublicates.isEmpty()) {
 			throw new NoDataAvailableException("600", "No Data available");
 		}
-		return set;
+		return withoutdublicates;
 	}
 
 	@Override
@@ -389,8 +389,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<Employee> list = employeeRepository.findAll();
 		List<String> names = list.stream().map(s1 -> s1.getName()).sorted().collect(Collectors.toList());
 		for (String string : names) {
-			if (string.equals("naveenkumar")) {
-				str = "naveenkumar";
+			if (string.equals("naveen")) {
+				str = "naveen";
 				break;
 			}
 

@@ -46,7 +46,7 @@ public interface EmployeeService {
 
 	Set<Employee> printDublicateRecordsDeatails();
 
-	Set<Double> printWithoutDublicateRecordsDeatails();
+	Set<Employee> printWithoutDublicateRecordsDeatails();
 
 	List<Employee> findParticularRecordsAscsDeatails();
 

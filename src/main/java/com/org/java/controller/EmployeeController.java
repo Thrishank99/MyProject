@@ -209,7 +209,7 @@ public class EmployeeController {
 
 	@GetMapping("/printwithoutDublicateRecordsInList")
 	public ResponseEntity<Employee> printWithoutDublicateRecords() {
-		Set<Double> emplist = employeeService.printWithoutDublicateRecordsDeatails();
+		Set<Employee> emplist = employeeService.printWithoutDublicateRecordsDeatails();
 		return new ResponseEntity(emplist, HttpStatus.OK);
 	}
 
